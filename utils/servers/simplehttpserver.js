@@ -30,6 +30,11 @@ function handleRequest(request, response) {
 	console.log('[' + (new Date()).toUTCString() + '] ' + '"' + request.method + ' ' + pathname + '"');
 
 	var filePath = path.join(currentDir, pathname);
+    if (path.normalize(decodeURIComponent(urlObject.pathname)) !== decodeURIComponent(urlObject.pathname)) {
+        response.statusCode = 403;
+        response.end();
+        return;
+    }
 
 	fs.stat(filePath, function(err, stats) {
 
